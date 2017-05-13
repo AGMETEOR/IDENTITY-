@@ -1,0 +1,10 @@
+
+{% if page.has_previous %}
+<a href="?query={{ cd.query }}&page={{ page.previous_page_number }}" type="button" class="w3-button w3-blue w3-small w3-margin-bottom">Previous</a>
+{% endif %}
+
+Page {{ page.number }} of {{ page.paginator.num_pages }}
+
+{% if page.has_next %}
+<a href="?query={{ cd.query }}&page={{ page.next_page_number }}" type="button" class="w3-button w3-blue w3-small w3-margin-bottom">Next</a>
+{% endif %}

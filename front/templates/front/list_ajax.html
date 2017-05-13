@@ -1,0 +1,13 @@
+{% load staticfiles %}
+{% load humanize %}
+{% for p in products %}
+  <div class="w3-col l3 s6">
+      <div class="w3-container">
+      {% load thumbnail %}
+      {% thumbnail p.image "400x300" crop="90%" as im %}
+      <a href="{{ p.get_absolute_url }}"><img src="{% if p.image %}{{ im.url }} {% else %}{% static 'img/no_image.png' %}{% endif %}" style="width:100%"> </a>
+        {% endthumbnail %}
+        <p><a href="{{ p.get_absolute_url }}">{{ p.name }}</a><br><b>UGX {{ p.price|intcomma }}</b></p>
+      </div>
+      </div>
+  {% endfor %}

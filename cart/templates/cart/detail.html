@@ -1,0 +1,83 @@
+{% extends "front/fBase.html" %}
+
+{% load staticfiles %}
+{% load humanize %}
+
+{% block title %} iDentity | Cart {% endblock %}
+
+{% block image_header %}
+{% endblock %}
+
+{% block our_products %}
+{% endblock %}
+
+
+{% block product%}
+<!-- Product grid -->
+<div class="w3-container">
+<table class="w3-table w3-striped w3-bordered w3-center w3-medium">
+<tr class="w3-black">
+<th> Product </th>
+<th> Quantity </th>
+<th> Unit </th>
+<th> Price </th>
+</tr>
+{% for item in cart %}
+{% with product=item.product %}
+<tr>
+<td> {% load thumbnail %}
+{% thumbnail product.image "50x50" crop="50%" as im %}
+<img src="{{im.url}}" style="border-radius:50%"> {% endthumbnail %} <br> {{product.name}} </td>
+<td> <b>
+<form action="{% url "cart:cart_add" product.id %}" method="post">
+{{ item.update_quantity_form.quantity }}
+{{ item.update_quantity_form.update }}
+<button type="submit" class="w3-button w3-blue w3-small">Update</button>
+{% csrf_token %}
+</form>
+</b> <br>  <a href="{% url 'cart:cart_remove' product.id%}" type="button" class="w3-button w3-red w3-small w3-margin-bottom">Remove</a></td>
+<td>{{ item.price|intcomma }}</td>
+<td>{{ item.total_price|intcomma}}</td>
+</tr>
+{% endwith %}
+{%endfor%}
+{% if cart.coupon %}
+<tr class="w3-black">
+<td> Sub-total</td>
+<td colspan="2"> </td>
+<td> UGX {{ cart.get_total_price|intcomma }}</td>
+</tr>
+<tr class="w3-gray">
+<td> You applied "{{cart.coupon.code}}" coupon, {{ cart.coupon.discount}}% off</td>
+<td colspan="2"> </td>
+<td> UGX {{ cart.get_discount|intcomma}}</td>
+</tr>
+{% endif %}
+<tr class="w3-red">
+<td> Total </td>
+<td colspan="2"> </td>
+<td> UGX {{ cart.get_total_price_after_discount|intcomma}}</td>
+</tr>
+</table>
+
+<form action="{% url "coupons:apply" %}" method="post">
+{% load widget_tweaks %}
+<p>{{ coupon_apply_form.code|attr:"class:w3-input w3-border"|attr:"placeholder:coupon #code here..."}}</p>
+<button type="submit" class="w3-button w3-blue w3-margin-bottom">Apply</button>
+{% csrf_token %}
+</form>
+
+
+
+
+
+
+
+
+
+
+
+<a href="{% url 'front:product_list'%}" type="button" class="w3-button w3-blue w3-small w3-margin-bottom">Continue shopping</a>
+<a href="{% url "orders:order_create" %}" type="button" class="w3-button w3-blue w3-small w3-margin-bottom">Check out</a>
+</div>
+{% endblock %}

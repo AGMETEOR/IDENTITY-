@@ -1,0 +1,18 @@
+{% extends "accounts/accBase.html" %}
+{% block title %}Create an account{% endblock %}
+{% block top_label%} Sign up! {% endblock %}
+{% block content %}
+<h1>Create an account</h1>
+<form action="." method="post">
+{% load widget_tweaks %}
+<p>{{ user_form.username|attr:"class:w3-input w3-border"|attr:"placeholder:Username"}}</p>
+<p>{{ user_form.first_name|attr:"class:w3-input w3-border"|attr:"placeholder: Preferred Name"}}</p>
+<p>{{ user_form.email|attr:"class:w3-input w3-border"|attr:"placeholder:Email"}}</p>
+<p>{{ user_form.password|attr:"class:w3-input w3-border"|attr:"placeholder:Password"}}</p>
+<p>{{ user_form.password2|attr:"class:w3-input w3-border"|attr:"placeholder:Repeat Password"}}</p>
+{% csrf_token %}
+<button type="submit" class="w3-button w3-blue w3-margin-bottom">Signup</button>
+
+</form>
+Already have an account? Login <a href="{% url "login" %}">here</a></p>
+{% endblock %}

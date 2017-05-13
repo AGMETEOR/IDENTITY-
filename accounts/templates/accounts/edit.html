@@ -1,0 +1,25 @@
+{% extends "accounts/accBase.html" %}
+{% block title %}Edit your account{% endblock %}
+{% block top_label %} Update your Contact Information. {% endblock%}
+{% block content %}
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li class="{{ message.tags }}">
+{{ message|safe }}
+<a href="{% url "front:product_list"%}">Close</a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+<p>Hello {{request.user.username }}. We use this information to deliver to you as fast and accurate as possible. We don't give out this information to any outside parties as stipulated in our privacy policy.</p>
+<form action="." method="post">
+{% load widget_tweaks %}
+<p>{{ extra_data_form.phone_number|attr:"class:w3-input w3-border"|attr:"placeholder:Phone Number"}}</p>
+<p>{{ extra_data_form.location|attr:"class:w3-input w3-border"|attr:"placeholder:Location"}}</p>
+{% csrf_token %}
+<button type="submit" class="w3-button w3-blue w3-margin-bottom">Save Changes</button>
+</form>
+<a href=" {% url "orders:order_create" %}">Back to Check out </a> <br>
+<a href=" {% url "front:product_list" %}">Back to Store Front </a>
+{% endblock %}

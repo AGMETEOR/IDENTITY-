@@ -1,0 +1,47 @@
+{% extends "accounts/accBase.html" %}
+{% load humanize %}
+{% block title %}iDENTITY | Checkout {% endblock %}
+{% block top_label %} Checking out your Order {% endblock%}
+{% block content %}
+<p>In case the information in the form below has changed, please edit from <a href="{% url "edit"%}">here</a> before placing your order. We need this information to deliver your order.</p>
+{% if cart.get_total_price  %}
+<h2> Your order</h2>
+
+<ul>
+{% for item in cart %}
+<li>
+{{ item.quantity }}x {{ item.product.name }} UGX {{ item.total_price|intcomma }}
+</li>
+{% endfor %}
+{% if cart.coupon %}
+<li>
+Coupon "{{ cart.coupon.code }}" applied, ({{ cart.coupon.discount }}% off) <span>- UGX {{ cart.get_discount|intcomma}}</span>
+</li>
+{% endif %}
+</ul>
+
+<p>Total: UGX {{ cart.get_total_price_after_discount|intcomma }}</p>
+{% else%}
+<h2>You have not placed an order yet.</h2>
+{% endif %}
+<form action="." method="post">
+{% load widget_tweaks %}
+<p>{{ form.username|attr:"class:w3-input w3-border"|attr:"type:hidden"}}</p>
+<p>{{ form.firstname|attr:"class:w3-input w3-border"|attr:"type:hidden"}}</p>
+<p>{{ form.email|attr:"class:w3-input w3-border"|attr:"type:hidden"}}</p>
+<p>{{ form.phone_number|attr:"class:w3-input w3-border"|attr:"placeholder:Phone Number"}}</p>
+<p>{{ form.location|attr:"class:w3-input w3-border"|attr:"placeholder:Location"}}</p>
+<button type="submit" class="w3-button w3-blue w3-margin-bottom">Place Order</button>
+{% csrf_token %}
+</form>
+
+
+
+<p class="w3-small">IDENTITY STORES will use the information provided to us to deliver the products that you ordered for. 
+We don't give out this information to any third parties as stipulated in our <a href="#">Privacy policy</a>.</p>
+
+{% endblock%}
+
+
+
+

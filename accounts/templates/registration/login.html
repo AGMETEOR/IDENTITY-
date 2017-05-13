@@ -1,0 +1,26 @@
+{% extends "accounts/accBase.html" %}
+{% block title %}identity | Log-in{% endblock %}
+{% block top_label%} Login! {% endblock %}
+{% block content %}
+{% if form.errors %}
+<p>
+Your username and password didn't match.
+Please try again.
+</p>
+{% else %}
+
+{% endif %}
+
+
+<form action="{% url 'login' %}" method="post">
+{% load widget_tweaks %}
+<p>{{ form.username|attr:"class:w3-input w3-border"|attr:"placeholder:Username"}}</p>
+<p>{{ form.password|attr:"class:w3-input w3-border"|attr:"placeholder:Password"}}</p>
+
+{% csrf_token %}
+<input type="hidden" name="next" value="{{ next }}" />
+<button type="submit" class="w3-button w3-blue w3-margin-bottom">Login</button>
+</form>
+<p><a href="{% url "password_reset" %}">Forgotten your password?</a></p>  <br>
+Don't have an account? Signup <a href="{% url "register" %}">here</a></p>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "accounts/accBase.html" %}
+{% load humanize %}
+{% block title %}iDENTITY | Search Results{% endblock %}
+{% block top_label %} Your search results...{% endblock%}
+{% block content %}
+<form action="." method="get">
+{% load widget_tweaks %}
+<p>{{ form.query|attr:"class:w3-input w3-border"|attr:"placeholder:Search products"}}</p>
+<button type="submit" class="w3-button w3-blue w3-margin-bottom">Search</button>
+</form>
+
+
+<h3>You searched for "{{ cd.query }}"</h3>
+<table class="w3-table  w3-medium ">
+<tr><th>{{ total_results }} result{{ total_results|pluralize}}</th></tr>
+
+{% for result in prods %}
+
+{% with product=result.object %}
+<tr class="w3-border-bottom">
+<td>
+{% load thumbnail %}
+{% thumbnail product.image "100x100" crop="5%" as im %}
+<a href="{{ product.get_absolute_url }}"><img src="{{im.url}}" style="border-radius:50%"></a>
+{% endthumbnail %}
+</td>
+<td>
+<h4>{{ product.name }}</h4>
+{{ product.description|truncatewords:30 }}<br>
+UGX {{product.price|intcomma}}
+</td>
+</tr>
+
+{% endwith %}
+{% endfor %}
+
+</table>
+
+<div class="w3-center">
+{% include "front/pagination.html" with page=prods %}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "front/fBase.html" %}
+
+{% load staticfiles %}
+{% load humanize %}
+
+{% block title %} {% if category %}{{ category.name }}{% else %}Products | {{ product.name }}{% endif %} {% endblock %}
+
+{% block image_header %}
+{% endblock %}
+
+{% block our_products %}
+{% endblock %}
+
+
+{% block product%}
+<!-- Product grid -->
+<div class="w3-row">
+<div class="w3-container">
+<span id="img" class="zoom">
+<img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" style="width:100%">
+</span>
+</div>
+</div>
+{% endblock%}
+
+{% block sub_section%}
+<!-- Subscribe section -->
+<div class="w3-container w3-black w3-padding-32">
+<h1>{{product.name}}</h1>
+<h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>
+<p>UGX {{product.price|intcomma}}</p>
+<form action="{% url "cart:cart_add" product.id %}" method="post">
+{{ cart_product_form }}
+{% csrf_token %}
+<button type="submit" class="w3-button w3-blue w3-small">Add to Cart</button>
+</form>
+<p>{{product.description|linebreaks}}</p>
+</div>
+{% endblock%}
+
+{% block domready %}
+$('#img').zoom({ on:'click' });
+{% endblock %}
+
+
+
+

@@ -1,0 +1,22 @@
+{% extends "accounts/accBase.html" %}
+{% load humanize %}
+{% block title %}iDENTITY | Checkout {% endblock %}
+{% block top_label %} Checking out your Order {% endblock%}
+{% block content %}
+<h2>Thank you for shopping at iDENTITY online shop.</h2>
+<p>Your order number is {{ order.id }}</p>
+<hr>
+<p>&star; Please not the following about your order.</p>
+<p>&star; IDENTITY stores takes the responsibility of delivering your goods as quickly as possible and undamaged.</p>
+<p>&star; Payment method currently supported is CASH ON DELIVERY only around Kampala and surrounding suburbs.</p>
+<p>&star; DELIVERY WILL ONLY BE MADE IN AREAS THAT DON'T POSE ANY SECURITY THREATS.</p>
+<p>&star; All orders of goods on IDENTITY will be verified through a call before transit to delivery. Please update your location and mobile number regularly on our website.</p>
+<p>&star; We send you a copy of the details for the goods ordered for through email. We also keep a copy of these details for future reference</p>
+<p>&star; IDENTITY STORES will use the information provided to us to deliver the products that you ordered for. 
+We don't give out this information to any third parties as stipulated in our <a href="#">Privacy policy</a>.</p>
+
+{% endblock%}
+
+
+
+
